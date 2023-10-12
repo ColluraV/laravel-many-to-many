@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Type;
+use App\Models\Tecnology;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +13,7 @@ class TypeSeeder extends Seeder
      */
     public function run(): void
     {
-        $types = [
+        $tecnologies = [
             "HTML",
             "CSS",
             "Bootsrap",
@@ -25,10 +25,10 @@ class TypeSeeder extends Seeder
             "Laravel",
             "Sass",
         ];
-        foreach ($types as $type) {
-            $newType = new Type();
-            $newType->label = $type;
-            $newType->save();
+        foreach ($tecnologies as $Tecnology) {
+            $newTecnology = new Tecnology();
+            $newTecnology->label = $Tecnology;
+            $newTecnology->save();
         }
     }
 }
