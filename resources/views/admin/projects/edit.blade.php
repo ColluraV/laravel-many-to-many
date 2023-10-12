@@ -17,7 +17,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.projects.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.projects.update', $project->id) }}" method="put" enctype="multipart/form-data">
                     @csrf()
                     
                     <h1 class="form-title text-center">Modifica l'elemento nel database</h1>
@@ -41,6 +41,18 @@
                         </select>
                         <label for="type_id">Scegli la tipologia</label>
                     </div>
+
+                    <div>
+                        @foreach ($tecnologies as $tecnology)
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" name="tecnologies[]" id="{{$tecnology->id}}" value="{{$tecnology->id}}"
+                          {{ $project->tecnology?->contains($tecnology) ? 'checked' : ''}} >
+                          <label class="form-check-label" for="{{$tecnology->id}}">{{$tecnology->name}}</label>
+                        </div>
+                        @endforeach
+                      </div>
+                    </div>
+
 
                     <div class="mb-3">
                         <label for="image" class="form-label fw-bold">Immagine</label>

@@ -44,6 +44,16 @@
                         <label for="type_id">Scegli la tipologia</label>
                     </div>
 
+                    <div>
+                        @foreach ($tecnologies as $tecnology)
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="checkbox" name="tecnologies[]" id="{{$tecnology->id}}" value="{{$tecnology->id}}">
+                          <label class="form-check-label" for="{{$tecnology->id}}">{{$tecnology->name}}</label>
+                        </div>
+                        @endforeach
+                      </div>
+                    </div>
+
                     <div class="mb-3">
                         <label for="image" class="form-label fw-bold">Immagine</label>
                         <input name="image" type="file" class="form-control" accept="image/*">

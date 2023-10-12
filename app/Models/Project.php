@@ -31,7 +31,7 @@ public function type() {
 }
 
 public function tecnologies() {
-    return $this->belongsTo(Tecnology::class);
+    return $this->belongsToMany(Tecnology::class);
 }
 
 }

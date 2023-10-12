@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectStoreRequest;
 use App\Models\Project;
+use App\Models\Tecnology;
 use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -38,8 +39,11 @@ class ProjectController extends Controller
 
     public function create()
     {
-        $types=Type::all();
-        return view("admin.projects.create",compact('types'));
+        $types=Type::all();             //richiamo type
+        $tecnologies=Tecnology::all();    //richiamo tecnology
+        
+        return view("admin.projects.create",compact("types","tecnologies"));
+
     }
 
 
@@ -76,8 +80,13 @@ class ProjectController extends Controller
 
         $project = Project::create($data);/*il comando create esegue sia il fill che il save*/
 
+        if (key_exists("tecnologies",$data)){
+            $project->tecnologies()->attach($data["tecnologies"]);
+        }//attach ha bisogno di un id per connettere la tabella ponte, 
+         //dunque va creata dopo il save
+
         return redirect()->route("admin.projects.show", $project->id);
-        dump($data);
+
     }
 
 
@@ -86,7 +95,8 @@ class ProjectController extends Controller
     {
         $project = Project::findOrFail($id);
         $types=Type::all();
-        return view("admin.projects.edit", ["project" => $project],compact('types'));
+        $tecnologies=Tecnology::all();
+        return view("admin.projects.edit", ["project" => $project],compact('types','tecnologies'));
     }
 
 
@@ -103,6 +113,13 @@ class ProjectController extends Controller
 
         $data["image"]= Storage::put("projects",$data["image"]);
 
+        $project->tecnologies()->sync($data["tecnologies"]);
+        
+        //in caso di update si eliminano prima i dati vecchi e in seguito si aggiungono i nuovi anche se sono uguali
+        //$project->tecnologies()->detach($data["tecnologies"]);
+        //$project->tecnologies()->attach($data["tecnologies"]);
+        //con sync sincronizzo tecnologies aggiornandp i dati inm caso di differenze
+
         $project->update($data);
 
         return redirect()->route('admin.projects.show', $project->id);
@@ -118,6 +135,8 @@ class ProjectController extends Controller
             Storage::delete($project->image);
         }
 
+        //prima di eliminare un project cancelliamo il suo collegamento
+        $project->tecnologies()->detach();
         $project->delete();
         return redirect()->route('admin.projects.index');
     }
