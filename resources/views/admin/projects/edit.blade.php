@@ -46,7 +46,7 @@
                         @foreach ($tecnologies as $tecnology)
                         <div class="form-check form-check-inline">
                           <input class="form-check-input" type="checkbox" name="tecnologies[]" id="{{$tecnology->id}}" value="{{$tecnology->id}}"
-                          {{ $project->tecnology?->contains($tecnology) ? 'checked' : ''}} >
+                          {{ $project->tecnologies?->contains($tecnology) ? 'checked' : ''}} >
                           <label class="form-check-label" for="{{$tecnology->id}}">{{$tecnology->name}}</label>
                         </div>
                         @endforeach
