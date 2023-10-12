@@ -35,9 +35,9 @@
                     <div class="mb-3">
                         <select class="form-select" name="type_id" aria-label="Floating label select example">
                             <option selected>{{ old('type_id') }}</option>
-                            @foreach ($types as $type )
-                            <option @if(old('type_id')==$type->id)selected @endif value="{{$type->id}}">{{ $type->label }}</option>
-                                
+                            @foreach ($types as $type)
+                                <option @if (old('type_id') == $type->id) selected @endif value="{{ $type->id }}">
+                                    {{ $type->label }}</option>
                             @endforeach
 
                         </select>
@@ -46,13 +46,14 @@
 
                     <div>
                         @foreach ($tecnologies as $tecnology)
-                        <div class="form-check form-check-inline">
-                          <input class="form-check-input" type="checkbox" name="tecnologies[]" id="{{$tecnology->id}}" value="{{$tecnology->id}}">
-                          <label class="form-check-label" for="{{$tecnology->id}}">{{$tecnology->name}}</label>
-                        </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="checkbox" name="tecnologies[]"
+                                    id="{{ $tecnology->id }}" value="{{ $tecnology->id }}">
+                                <label class="form-check-label" for="{{ $tecnology->id }}">{{ $tecnology->name }}</label>
+                            </div>
                         @endforeach
-                      </div>
                     </div>
+
 
                     <div class="mb-3">
                         <label for="image" class="form-label fw-bold">Immagine</label>
